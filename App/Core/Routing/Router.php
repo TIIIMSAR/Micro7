@@ -3,6 +3,7 @@
 namespace App\Core\Routing;
 
 use \App\Core\Request;
+use App\Middleware\GlobalMiddleware;
 
 class Router{
     private $request;
@@ -11,20 +12,54 @@ class Router{
     const BASE_CONTROLLER = '\App\Controllers\\';
 
     public function __construct(){
-        $this->request =new Request();
+        $this->request = new Request();
         $this->routes = Route::routes();
         $this->current_route = $this->findRoute($this->request) ?? null;
+        # run middleware
+        $this->run_global_middleware();
+        $this->run_route_middleware();
+    }
+
+    private function run_global_middleware(){
+        $global_middleware = new GlobalMiddleware();
+        $global_middleware->handle();
+    }
+
+    private function run_route_middleware(){
+        $middleware = $this->current_route['middleware'];
+        foreach($middleware as $middleware_class){
+            $middleware_obj = new $middleware_class;
+            $middleware_obj->handle();
+        }
     }
 
     public function findRoute(Request $request){
         foreach ($this->routes as $route) {
-            if(in_array($request->method(),$route['methods']) && $request->uri() == $route['uri'] ){
+            if(!in_array($request->method(),$route['methods'])){
+                return false;
+            }
+            if($this->regex_matched($route)){
                 return $route;
             }
         }
         return null;
     }
 
+
+    public function regex_matched($route){
+        global $request;
+        $pattern = "/^". str_replace(['/','{','}'],['\/','(?<','>[-%\w]+)'],$route['uri']) ."$/";
+        $result = preg_match($pattern,$this->request->uri(),$matches);
+        if(!$result){
+            return false;
+        }
+        foreach($matches as $key => $value){
+            if(!is_int($key)){
+                $request->add_route_param($key,$value);
+            }
+        }
+        return true;
+    }
 
     public function dispatch404(){
         header("HTTP/1.0 404 Not Found");
@@ -38,6 +73,7 @@ class Router{
         #      $this->dispatch405();
         # }
         # 404 : uri not exists
+
         if(is_null($this->current_route))
             $this->dispatch404();
         $this->dispatch($this->current_route);

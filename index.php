@@ -1,24 +1,28 @@
 <?php
 # front conroller
+
+use App\Models\Product;
+use App\Models\User;
+
 include "bootsrap/init.php";
+
+
+// $userModel = new User();
+// $result = $userModel->sum('id', ['id[>]'=>8]);
+// var_dump($result);
+
+
+// $productModel = new Product();
+
+// var_dump($productModel->getAll());
+
+// for($i = 1 ; $i <= 7 ; $i++ ){
+//     $productModel->create([
+//         'title' => "Product-$i",
+//         'price' => rand(1,100) * 1000
+//     ]);
+// }
+
 
 $router = new \App\Core\Routing\Router();
 $router->run();
-
-
-// $route_pattern = '/^\/post\/(?<slug>[-%\w]+)$/';
-// $route = '/post/{slug}'; 
-
-// $pattern = "/^". str_replace(['/','{','}'],['\/','(?<','>[-%\w]+)'],$route) ."$/";
-
-// nice_dump($route);
-// nice_dump($pattern);
-// nice_dump('/^\/post\/(?<slug>[-%\w]+)$/');
-
-// $uri1 = '/post/what-is-php';
-// $uri2 = '/post/why-you-must-choose-7Learn';
-// $uri3 = '/product/course-php';
-
-// $result = preg_match($route_pattern,$uri1,$matches);
-// nice_dump($result);
-// nice_dump($matches);

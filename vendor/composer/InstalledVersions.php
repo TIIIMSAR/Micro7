@@ -29,7 +29,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '4ad84b5ddee261c31c482c52a30d868c893986b4',
+    'reference' => 'c959a1b788058f168556a209717949cc6301a884',
     'name' => '__root__',
   ),
   'versions' => 
@@ -41,7 +41,16 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '4ad84b5ddee261c31c482c52a30d868c893986b4',
+      'reference' => 'c959a1b788058f168556a209717949cc6301a884',
+    ),
+    'catfan/medoo' => 
+    array (
+      'pretty_version' => 'v2.0.1',
+      'version' => '2.0.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '2d0345be643e67f8d43acb282bf9a882e8e9971a',
     ),
     'composer/ca-bundle' => 
     array (

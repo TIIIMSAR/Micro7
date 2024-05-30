@@ -8,6 +8,7 @@ class StupidRouter{
     public function __construct()
     {
         $this->routes = [
+            '/' => 'home/index.php',
             '/hasan/red' => 'colors/red.php',
             '/hasan/blue' => 'colors/blue.php',
             '/hasan/green' => 'colors/green.php'

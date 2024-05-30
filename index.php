@@ -1,8 +1,9 @@
 <?php
 # front conroller
-include "vendor/autoload.php";
 
+use App\Utilities\Lang;
 
-// echo $_SERVER['REQUEST_URI'];
+include "bootsrap/init.php";
 
-new App\Core\Request();
+$text = "در سال 1400 سون لرن بیش از 100 هزار کاربر ثبت نامی دارد";
+echo Lang::persian_numbers($text);
